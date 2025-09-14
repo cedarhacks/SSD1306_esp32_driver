@@ -6,6 +6,9 @@
 #include "driver/i2c_master.h"
 
 #define MAX_COMMANDS (32)
+#define SSD1306_WIDTH (128)
+#define SSD1306_HEIGHT (32)
+#define SSD1306_PAGES ((SSD1306_HEIGHT + 7) / 8)
 
 /// fit into the SSD1306_ naming scheme
 #define SSD1306_BLACK 0   ///< Draw 'off' pixels
@@ -55,6 +58,7 @@ typedef struct SSD1306 {
     int i2c_freq_hz;
     i2c_master_bus_handle_t bus_handle;
     i2c_master_dev_handle_t dev_handle;
+    uint8_t contrast;
 } SSD1306_t;
 
 void SSD1306_init(SSD1306_t *inst);
@@ -62,6 +66,10 @@ void SSD1306_init(SSD1306_t *inst);
 void SSD1306_command(SSD1306_t *inst, uint8_t command);
 void SSD1306_command_list(SSD1306_t *inst, uint8_t *commands, int len_commands);
 
-void test(SSD1306_t *inst);
 void SSD1306_setup_display(SSD1306_t *inst);
-void SSD1306_display(SSD1306_t *inst, uint8_t* buffer);
+void SSD1306_display(SSD1306_t *inst, uint8_t pixels[SSD1306_HEIGHT * SSD1306_WIDTH]);
+void SSD1306_dim(SSD1306_t *inst, bool dim);
+void test(SSD1306_t *inst);
+
+// void pack_pixels_to_ssd1306(uint8_t pixels[SSD1306_HEIGHT * SSD1306_WIDTH],
+//                             uint8_t buffer[SSD1306_WIDTH * SSD1306_PAGES]);
