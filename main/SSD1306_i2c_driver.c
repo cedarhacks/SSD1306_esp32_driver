@@ -69,6 +69,7 @@ void SSD1306_setup_display(SSD1306_t *inst) {
                        0x0,                        // no offset
                        SSD1306_SETSTARTLINE | 0x0, // line #0
                        SSD1306_CHARGEPUMP};        // 0x8D
+
     SSD1306_command_list(inst, init2, sizeof(init2));
 
     SSD1306_command(inst, 0x14);
@@ -150,7 +151,7 @@ void SSD1306_display(SSD1306_t *inst, uint8_t pixels[SSD1306_HEIGHT * SSD1306_WI
     SSD1306_command(inst, 0);                   // Column start
     SSD1306_command(inst, (SSD1306_WIDTH - 1)); // Column end address
 
-    vTaskDelay(1 / portTICK_PERIOD_MS);
+    // vTaskDelay(1 / portTICK_PERIOD_MS);
 
     uint16_t count = SSD1306_WIDTH * SSD1306_PAGES;
     uint8_t out[MAX_COMMANDS];

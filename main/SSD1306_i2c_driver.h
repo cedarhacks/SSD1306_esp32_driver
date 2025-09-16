@@ -5,7 +5,7 @@
 #include "esp_log.h"
 #include "driver/i2c_master.h"
 
-#define MAX_COMMANDS (32)
+#define MAX_COMMANDS (64)
 #define SSD1306_WIDTH (128)
 #define SSD1306_HEIGHT (32)
 #define SSD1306_PAGES ((SSD1306_HEIGHT + 7) / 8)
@@ -50,6 +50,8 @@
 #define SSD1306_DEACTIVATE_SCROLL 0x2E                    ///< Stop scroll
 #define SSD1306_ACTIVATE_SCROLL 0x2F                      ///< Start scroll
 #define SSD1306_SET_VERTICAL_SCROLL_AREA 0xA3             ///< Set scroll range
+
+
 
 typedef struct SSD1306 {
     int i2c_data_pin;
