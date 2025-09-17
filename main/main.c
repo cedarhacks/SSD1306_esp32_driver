@@ -16,9 +16,13 @@ SSD1306_t display;
 
 const extern uint8_t _binary_splash_bmp_start[];
 const extern uint8_t _binary_splash_bmp_end[];
+const extern uint8_t _binary_splash_jpg_start[];
+const extern uint8_t _binary_splash_jpg_end[];
 
 static lv_obj_t *bar;
 static lv_timer_t *anim_timer;
+
+LV_IMG_DECLARE(splash);
 
 static void anim_cb(lv_timer_t *t) {
     static int v = 0;
@@ -46,6 +50,8 @@ void my_flush_cb(lv_display_t *disp, const lv_area_t *area, uint8_t *px_map) {
 
             if (color_on(pix)) {
                 pixels[i] = 0xff;
+            } else {
+                pixels[i] = 0x00;
             }
         }
     }
@@ -96,7 +102,7 @@ void app_main(void) {
 
     // // Title row
     lv_obj_t *title = lv_label_create(lv_screen_active());
-    lv_label_set_text(title, "CedarHacks");
+    lv_label_set_text(title, "Hey babygurl");
     lv_obj_set_style_text_font(title, &lv_font_montserrat_10, 0);
     lv_obj_set_style_text_letter_space(title, 1, 0);
     lv_obj_set_pos(title, 1, 0);
@@ -133,21 +139,21 @@ void app_main(void) {
 
     lv_bmp_init();
 
-    const lv_img_dsc_t img_data = {
-        .header.cf = LV_COLOR_FORMAT_RGB888,
-        .header.w = 128,
-        .header.h = 32,
-        .data_size = (_binary_splash_bmp_end - _binary_splash_bmp_start),
-        .data = _binary_splash_bmp_start,
-    };
+    // const lv_img_dsc_t img_data = {
+    //     .header.cf = LV_COLOR_FORMAT_RGB888,
+    //     .header.w = 128,
+    //     .header.h = 32,
+    //     .data_size = (_binary_splash_bmp_end - _binary_splash_bmp_start),
+    //     .data = _binary_splash_bmp_start,
+    // };
 
-    // lv_obj_t *img = lv_image_create(lv_screen_active());
-    // lv_image_set_src(img, &img_data);
-    // lv_obj_align(img, LV_ALIGN_CENTER, 0, 0);
+    lv_obj_t *img = lv_image_create(lv_screen_active());
+    lv_image_set_src(img, &splash);
+    lv_obj_center(img);
 
-    lv_image_header_t hdr;
-    lv_result_t r = lv_image_decoder_get_info(&img_data, &hdr);
-    printf("\ndecode result=%d, w=%d h=%d cf=%d\n", (int)r, (int)hdr.w, (int)hdr.h, (int)hdr.cf);
+    // lv_image_header_t hdr;
+    // lv_result_t r = lv_image_decoder_get_info(&img_data, &hdr);
+    // printf("\ndecode result=%d, w=%d h=%d cf=%d\n", (int)r, (int)hdr.w, (int)hdr.h, (int)hdr.cf);
 
     while (1) {
         vTaskDelay(10 / portTICK_PERIOD_MS);
