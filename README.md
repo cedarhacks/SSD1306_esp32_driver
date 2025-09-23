@@ -9,13 +9,13 @@ A small .c/.h file combo that initializes the display and lets you render a pixe
 After you compile in the SSD1306_i2c_driver.h/.c files into your esp-idf project, you can do the following:
 
 **Define a pixel buffer and create an SSD1306_t display object**
-```
+```c
 uint8_t pixels[SSD1306_HEIGHT * SSD1306_WIDTH];
 SSD1306_t display;
 ```
 
 **Initialize the display object**
-```
+```c
 display.i2c_data_pin = 15; // pin number for data
 display.i2c_clock_pin = 16; // pin number for clock
 display.i2c_freq_hz = 1000000;
@@ -24,12 +24,12 @@ SSD1306_init(&display);
 ```
 
 **Startup the display**
-```
+```c
 SSD1306_setup_display(&display);
 ```
 
 **Render pixels onto the display**
-```
+```c
 SSD1306_display(&display, pixels);
 ```
 
