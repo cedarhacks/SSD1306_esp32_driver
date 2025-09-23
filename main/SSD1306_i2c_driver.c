@@ -4,8 +4,8 @@
 
 static const char *TAG = "SSD1306";
 
-void pack_pixels_to_ssd1306( uint8_t pixels[SSD1306_WIDTH * SSD1306_HEIGHT],
-                             uint8_t buffer[SSD1306_WIDTH * SSD1306_PAGES]) {
+void pack_pixels_to_ssd1306(uint8_t pixels[SSD1306_WIDTH * SSD1306_HEIGHT],
+                            uint8_t buffer[SSD1306_WIDTH * SSD1306_PAGES]) {
     memset(buffer, 0, SSD1306_WIDTH * SSD1306_PAGES);
 
     for (int page = 0; page < SSD1306_PAGES; page++) {
@@ -42,9 +42,8 @@ void SSD1306_init(SSD1306_t *inst) {
         .device_address = inst->i2c_address,
         .scl_speed_hz = inst->i2c_freq_hz,
     };
-    ESP_ERROR_CHECK(i2c_master_bus_add_device(inst->bus_handle, &dev_config, &inst->dev_handle));
 
-    // probe the address
+    ESP_ERROR_CHECK(i2c_master_bus_add_device(inst->bus_handle, &dev_config, &inst->dev_handle));
 
     esp_err_t stat = i2c_master_probe(inst->bus_handle, inst->i2c_address, 10);
     if (stat == ESP_OK) {
@@ -183,7 +182,4 @@ void SSD1306_display(SSD1306_t *inst, uint8_t pixels[SSD1306_HEIGHT * SSD1306_WI
 void SSD1306_dim(SSD1306_t *inst, bool dim) {
     SSD1306_command(inst, SSD1306_SETCONTRAST);
     SSD1306_command(inst, dim ? 0 : inst->contrast);
-}
-
-void test(SSD1306_t *inst) {
 }

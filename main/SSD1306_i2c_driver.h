@@ -51,8 +51,6 @@
 #define SSD1306_ACTIVATE_SCROLL 0x2F                      ///< Start scroll
 #define SSD1306_SET_VERTICAL_SCROLL_AREA 0xA3             ///< Set scroll range
 
-
-
 typedef struct SSD1306 {
     int i2c_data_pin;
     int i2c_clock_pin;
@@ -71,7 +69,3 @@ void SSD1306_command_list(SSD1306_t *inst, uint8_t *commands, int len_commands);
 void SSD1306_setup_display(SSD1306_t *inst);
 void SSD1306_display(SSD1306_t *inst, uint8_t pixels[SSD1306_HEIGHT * SSD1306_WIDTH]);
 void SSD1306_dim(SSD1306_t *inst, bool dim);
-void test(SSD1306_t *inst);
-
-// void pack_pixels_to_ssd1306(uint8_t pixels[SSD1306_HEIGHT * SSD1306_WIDTH],
-//                             uint8_t buffer[SSD1306_WIDTH * SSD1306_PAGES]);

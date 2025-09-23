@@ -14,11 +14,6 @@ static lv_display_t *lvgl_display; // New display handle
 uint8_t pixels[SSD1306_HEIGHT * SSD1306_WIDTH];
 SSD1306_t display;
 
-const extern uint8_t _binary_splash_bmp_start[];
-const extern uint8_t _binary_splash_bmp_end[];
-const extern uint8_t _binary_splash_jpg_start[];
-const extern uint8_t _binary_splash_jpg_end[];
-
 static lv_obj_t *bar;
 static lv_timer_t *anim_timer;
 
@@ -31,9 +26,7 @@ static void anim_cb(lv_timer_t *t) {
     lv_bar_set_value(bar, v, LV_ANIM_OFF);
 }
 
-// Convert lv_color_t to ON/OFF for mono panel
 static inline bool color_on(lv_color_t c) {
-    // v9: safe brightness→threshold; tweak 32 if you want different gamma
     return lv_color_brightness(c) < 200;
 }
 
@@ -56,30 +49,12 @@ void my_flush_cb(lv_display_t *disp, const lv_area_t *area, uint8_t *px_map) {
         }
     }
 
-    // SSD1306_display(&display, pixels);
     lv_display_flush_ready(disp); // Tell LVGL we are done
 }
 
-void print_buff() {
-    for (int r = 0; r < SSD1306_HEIGHT; r++) {
-        for (int c = 0; c < SSD1306_WIDTH; c++) {
-            int i = (SSD1306_WIDTH * r) + c;
-
-            if (color_on(buf1[i])) {
-                printf("#");
-            } else {
-                printf(".");
-            }
-        }
-        printf("\n");
-    }
-    printf("\n");
-}
 
 void app_main(void) {
-    printf("HEllo world SSD1306\n");
-
-    display.i2c_data_pin = 15;  // IO2 ????
+    display.i2c_data_pin = 15;
     display.i2c_clock_pin = 16; // IO3 ?????
     display.i2c_freq_hz = 1000000;
     display.i2c_address = 0x3C; // ID for 32 pixel height display
@@ -102,7 +77,7 @@ void app_main(void) {
 
     // // Title row
     lv_obj_t *title = lv_label_create(lv_screen_active());
-    lv_label_set_text(title, "Hey babygurl");
+    lv_label_set_text(title, "Hey CedarHacks");
     lv_obj_set_style_text_font(title, &lv_font_montserrat_10, 0);
     lv_obj_set_style_text_letter_space(title, 1, 0);
     lv_obj_set_pos(title, 1, 0);
@@ -137,23 +112,12 @@ void app_main(void) {
     anim_timer = lv_timer_create(anim_cb, 200, NULL);
     lv_timer_set_user_data(anim_timer, dot);
 
-    lv_bmp_init();
+    // lv_bmp_init();
 
-    // const lv_img_dsc_t img_data = {
-    //     .header.cf = LV_COLOR_FORMAT_RGB888,
-    //     .header.w = 128,
-    //     .header.h = 32,
-    //     .data_size = (_binary_splash_bmp_end - _binary_splash_bmp_start),
-    //     .data = _binary_splash_bmp_start,
-    // };
+    // lv_obj_t *img = lv_image_create(lv_screen_active());
+    // lv_image_set_src(img, &splash);
+    // lv_obj_center(img);
 
-    lv_obj_t *img = lv_image_create(lv_screen_active());
-    lv_image_set_src(img, &splash);
-    lv_obj_center(img);
-
-    // lv_image_header_t hdr;
-    // lv_result_t r = lv_image_decoder_get_info(&img_data, &hdr);
-    // printf("\ndecode result=%d, w=%d h=%d cf=%d\n", (int)r, (int)hdr.w, (int)hdr.h, (int)hdr.cf);
 
     while (1) {
         vTaskDelay(10 / portTICK_PERIOD_MS);
@@ -164,9 +128,4 @@ void app_main(void) {
         // "Manually" run LVGL so it draws
         lv_tick_inc(10);
         lv_timer_handler();
-
-        // int64_t end = esp_timer_get_time(); // Get start time in microseconds
-        // int64_t duration_us = end - start;  // Duration in microseconds
-        // ESP_LOGI("TIMER", "Function execution took %lld us (%.3f ms)", duration_us, duration_us / 1000.0);
-    }
 }
