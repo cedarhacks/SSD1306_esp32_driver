@@ -37,3 +37,9 @@ SSD1306_display(&display, pixels);
 
 The main file in this project shows an example of integrating LVGL with this driver, you can use it as reference to do the same. The `color_on(...)` function might need to be tuned for your purposes
 
+To integrate the LVGL rendering into an esp32 project you can follow these steps:
+ - first add lvgl as a dependency by running: `idf.py add-dependency "lvgl/lvgl^9"` 
+ - You need to enable 8 bit color mode, using idf.py follow these steps:
+   - run `idf.py menuconfig`
+   - component config -> LVGL Configuration -> Color Settings -> RGB888
+   - You need to add "driver" for i2C drivers as a requirement to the cmake in your ESP32 project as well.
