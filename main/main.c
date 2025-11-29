@@ -52,7 +52,6 @@ void my_flush_cb(lv_display_t *disp, const lv_area_t *area, uint8_t *px_map) {
     lv_display_flush_ready(disp); // Tell LVGL we are done
 }
 
-
 void app_main(void) {
     display.i2c_data_pin = 15;
     display.i2c_clock_pin = 16; // IO3 ?????
@@ -118,7 +117,6 @@ void app_main(void) {
     // lv_image_set_src(img, &splash);
     // lv_obj_center(img);
 
-
     while (1) {
         vTaskDelay(10 / portTICK_PERIOD_MS);
 
@@ -128,4 +126,5 @@ void app_main(void) {
         // "Manually" run LVGL so it draws
         lv_tick_inc(10);
         lv_timer_handler();
+    }
 }
