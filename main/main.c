@@ -49,6 +49,18 @@ void my_flush_cb(lv_display_t *disp, const lv_area_t *area, uint8_t *px_map) {
         }
     }
 
+    for (int r = 0; r < SSD1306_HEIGHT; r++) {
+        for (int c = 0; c < SSD1306_WIDTH; c++) {
+            int i = r * SSD1306_WIDTH + c;
+
+            pixels[i] = 0x00;
+            if (r < SSD1306_HEIGHT / 2 && c < SSD1306_WIDTH / 2)
+                pixels[i] = 0xff;
+            if (r > SSD1306_HEIGHT / 2 && c > SSD1306_WIDTH / 2)
+                pixels[i] = 0xff;
+        }
+    }
+
     lv_display_flush_ready(disp); // Tell LVGL we are done
 }
 
@@ -57,6 +69,7 @@ void app_main(void) {
     display.i2c_clock_pin = 16; // IO3 ?????
     display.i2c_freq_hz = 1000000;
     display.i2c_address = 0x3C; // ID for 32 pixel height display
+    // display.i2c_address = 0x3D; // ID for 64 pixel height display
 
     memset(pixels, 0x0, sizeof(pixels));
     SSD1306_init(&display);
