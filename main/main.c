@@ -49,17 +49,17 @@ void my_flush_cb(lv_display_t *disp, const lv_area_t *area, uint8_t *px_map) {
         }
     }
 
-    for (int r = 0; r < SSD1306_HEIGHT; r++) {
-        for (int c = 0; c < SSD1306_WIDTH; c++) {
-            int i = r * SSD1306_WIDTH + c;
+    // for (int r = 0; r < SSD1306_HEIGHT; r++) {
+    //     for (int c = 0; c < SSD1306_WIDTH; c++) {
+    //         int i = r * SSD1306_WIDTH + c;
 
-            pixels[i] = 0x00;
-            if (r < SSD1306_HEIGHT / 2 && c < SSD1306_WIDTH / 2)
-                pixels[i] = 0xff;
-            if (r > SSD1306_HEIGHT / 2 && c > SSD1306_WIDTH / 2)
-                pixels[i] = 0xff;
-        }
-    }
+    //         pixels[i] = 0x00;
+    //         if (r < SSD1306_HEIGHT / 2 && c < SSD1306_WIDTH / 2)
+    //             pixels[i] = 0xff;
+    //         if (r > SSD1306_HEIGHT / 2 && c > SSD1306_WIDTH / 2)
+    //             pixels[i] = 0xff;
+    //     }
+    // }
 
     lv_display_flush_ready(disp); // Tell LVGL we are done
 }
