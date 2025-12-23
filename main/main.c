@@ -117,18 +117,18 @@ void app_main(void) {
 
     // Center label (tiny)
     lv_obj_t *mid = lv_label_create(lv_screen_active());
-    lv_label_set_text(mid, "Yooo is it work?");
+    lv_label_set_text(mid, "Here's an LVGL Slider");
     lv_obj_set_style_text_font(mid, &lv_font_montserrat_10, 0);
     lv_obj_center(mid);
 
     anim_timer = lv_timer_create(anim_cb, 200, NULL);
     lv_timer_set_user_data(anim_timer, dot);
 
-    // lv_bmp_init();
+    lv_bmp_init();
 
-    // lv_obj_t *img = lv_image_create(lv_screen_active());
-    // lv_image_set_src(img, &splash);
-    // lv_obj_center(img);
+    lv_obj_t *img = lv_image_create(lv_screen_active());
+    lv_image_set_src(img, &splash);
+    lv_obj_center(img);
 
     while (1) {
         vTaskDelay(10 / portTICK_PERIOD_MS);

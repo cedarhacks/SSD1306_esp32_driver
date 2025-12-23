@@ -4,9 +4,24 @@
 
 A small .c/.h file combo that initializes the display and lets you render a pixel buffer onto it. Lots of the fluff and display features is taken out, merge requests and modifications are welcome if you want to expand it!
 
+<img src="./demo.gif" height="400" />
+<img src="./splash.gif" height="400" />
+
+<!-- 
+![LVGL Sample](./demo.gif)
+![SPLASH Sample](./splash.gif) -->
+
 ## How to use
 
 After you compile in the SSD1306_i2c_driver.h/.c files into your esp-idf project, you can do the following:
+
+### About the display height
+There's 2 configurations for the SSD1306 I found, a 32 pixel and 64 pixel height one:
+ - If you are using the 64 pixel version you can copy the header/source files as they are. 
+ - If you are using the 32 pixel version you need to change the height in the SSD1306_i2c_driver.h by changing `#define SSD1306_HEIGHT (64)` to `#define SSD1306_HEIGHT (32)`
+
+
+### In your code
 
 **Define a pixel buffer and create an SSD1306_t display object**
 ```c
@@ -19,16 +34,16 @@ SSD1306_t display;
 display.i2c_data_pin = 15; // pin number for data
 display.i2c_clock_pin = 16; // pin number for clock
 display.i2c_freq_hz = 1000000;
-display.i2c_address = 0x3C; // ID for 32 pixel height display
+display.i2c_address = 0x3C;
 SSD1306_init(&display);
 ```
 
-**Startup the display**
+**Startup the display (Call this once)**
 ```c
 SSD1306_setup_display(&display);
 ```
 
-**Render pixels onto the display**
+**Render pixels onto the display (call this to render)**
 ```c
 SSD1306_display(&display, pixels);
 ```
