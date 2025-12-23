@@ -58,3 +58,14 @@ To integrate the LVGL rendering into an esp32 project you can follow these steps
    - run `idf.py menuconfig`
    - component config -> LVGL Configuration -> Color Settings -> RGB888
    - You need to add "driver" for i2C drivers as a requirement to the cmake in your ESP32 project as well.
+
+## If you just want to build this project and see anything on the screen
+
+ - Connect the clock pin to IO16
+ - Connect the data pin to IO15
+ - Connect the Ground and 3.3V
+ - `cd SSD1306_esp32_driver`
+ - if you haven't sourced the environment already: `source ~/esp/esp-idf/export.sh`
+ - `idf.py build` to build
+ - Set the esp to flash mode by restarting while grounding IO0
+ - `idf.py flash` to flash
