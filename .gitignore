@@ -1,1 +1,38 @@
+# --- ESP-IDF Build Artifacts ---
 build/
+build_*_*/
+sdkconfig
+sdkconfig.old
+*.log
+*.o
+*.pyc
+
+# --- Component Manager ---
+# Exclude the managed components as they are downloaded automatically
+managed_components/
+
+# OPTIONAL: You should generally COMMIT dependencies.lock to ensure consistent versions.
+# Only uncomment the line below if you want to always download the latest compatible versions.
+# dependencies.lock
+
+# --- IDE & Editor Settings ---
+.vscode/
+.idea/
+.clangd/
+.ccls-cache/
+.settings/
+*.launch
+.project
+.cproject
+
+# --- Python & CI Tools ---
+__pycache__/
+.pytest_cache/
+pytest_embedded_log/
+.manifest_sha
+app_info_*.txt
+size_info*.txt
+
+# --- OS Specific ---
+.DS_Store
+Thumbs.db
